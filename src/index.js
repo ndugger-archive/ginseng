@@ -1,13 +1,25 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
+import App from './app'
 import Button from './button'
-import ButtonGroup from './button-group'
+import CheckBox from './checkbox'
+import DropDown from './dropdown'
+import Icon from './icon'
+import Palette from './palette'
+import RadioButton from './radiobutton'
+import TextBox from './textbox'
 import Toolbar from './toolbar'
 
 export {
+    App,
     Button,
-    ButtonGroup,
+    CheckBox,
+    DropDown,
+    Icon,
+    Palette,
+    RadioButton,
+    TextBox,
     Toolbar
 }
 
@@ -15,41 +27,61 @@ export {
 
 (() => {
 
-    function App () {
+    function Foo () {
 
         return (
-            <Toolbar eventHandlers={ { onClick: e => console.log(e.target) } }>
+            <App>
+                <Toolbar onClick={ e => console.log(e.target) }>
 
-                <ButtonGroup name='fooBarBazGroup' behavior='radio' active='foo'>
-                    <Button name='foo' eventHandlers={ { onClick: e => e.preventDefault() } }>
-                        Foo
-                    </Button>
-                    <Button name='bar' eventHandlers={ { onClick: e => e.preventDefault() } }>
-                        Bar
-                    </Button>
-                    <Button name='baz' eventHandlers={ { onClick: e => e.preventDefault() } }>
-                        Baz
-                    </Button>
-                </ButtonGroup>
+                    <Button.Group>
+                        <Button>
+                            <Icon glyph='send' size={ 18 }/>
+                        </Button>
+                        <Button>
+                            Foo
+                        </Button>
+                        <Button>
+                            Bar
+                        </Button>
+                    </Button.Group>
 
-                <Toolbar.Separator/>
+                    <Toolbar.Separator/>
 
-                <ButtonGroup name='fooBarBazGroup2' behavior='radio'>
-                    <Button eventHandlers={ { onClick: e => e.preventDefault() } }>
-                        Foo
-                    </Button>
-                    <Button eventHandlers={ { onClick: e => e.preventDefault() } }>
-                        Bar
-                    </Button>
-                    <Button eventHandlers={ { onClick: e => e.preventDefault() } }>
-                        Baz
-                    </Button>
-                </ButtonGroup>
+                    <Button.Group>
+                        <Button>
+                            Baz
+                        </Button>
+                        <Button>
+                            Bxz
+                        </Button>
+                    </Button.Group>
 
-            </Toolbar>
+                    <Toolbar.Separator/>
+
+                    <CheckBox label='Hello, World' $onChange={ checked => console.log( checked ) }/>
+
+                    <Toolbar.Separator/>
+
+                    <RadioButton.Group direction='row' $onChange={ value => console.log( value ) }>
+                        <RadioButton value={ 123 } label='Foo'/>
+                        <RadioButton label='Bar' checked/>
+                        <RadioButton label='Baz'/>
+                        <RadioButton label='Bxy'/>
+                    </RadioButton.Group>
+
+                    <Toolbar.Separator/>
+
+                    <DropDown multi $onChange={ value => console.log( value ) }>
+                        <DropDown.Option label='Foo'/>
+                        <DropDown.Option label='Bar'/>
+                        <DropDown.Option label='Baz'/>
+                    </DropDown>
+
+                </Toolbar>
+            </App>
         )
     }
 
-    ReactDOM.render(<App/>, document.getElementById('ginsengContainer'))
+    ReactDOM.render(<Foo/>, document.body)
 
 })()

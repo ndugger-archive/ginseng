@@ -1,24 +1,27 @@
-import React from 'react'
-import Aphrodite from 'aphrodite'
+import React, { Component } from 'react'
+import * as Aphrodite from 'aphrodite/no-important'
 
-import BaseComponent from '../base'
 import Style from './style'
 
-export default class Toolbar extends BaseComponent {
+export default class Toolbar extends Component {
 
-    static Separator ( ) {
+    static Separator ( props ) {
+        const { className = '', style = { } } = props
+        const separatorClassName = `${ Aphrodite.css( Style.toolbarSeparator ) } ${ className }`
+
         return (
-            <div className={ Aphrodite.css( Style.toolbarSeparator ) }/>
+            <div className={ separatorClassName }/>
         )
     }
 
     render ( ) {
-        const { children, eventHandlers } = this.props
+        const { children, className = '', eventHandlers = { }, style = { } } = this.props
+        const toolbarClassName = `${ Aphrodite.css( Style.toolbar ) } ${ className }`
 
         return (
-            <section className={ Aphrodite.css( Style.toolbar ) } { ...eventHandlers }>
+            <nav className={ toolbarClassName } style={ style } { ...eventHandlers }>
                 { children }
-            </section>
+            </nav>
         )
     }
 }

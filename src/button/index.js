@@ -1,18 +1,20 @@
 import React from 'react'
-import Aphrodite from 'aphrodite'
+import * as Aphrodite from 'aphrodite/no-important'
 
-import BaseComponent from '../base'
+import BaseGinsengComponent from '../base'
+import ButtonGroup from './group'
 import Style from './style'
 
-export default class Button extends BaseComponent {
+export default class Button extends BaseGinsengComponent {
 
-    state = { active: false }
+    static Group = ButtonGroup
 
     render ( ) {
-        const { active, children, eventHandlers } = this.props
+        const { active, children, className, style } = this.props
+        const buttonClassName = `${ Aphrodite.css( Style.button, active && Style.button__active ) } ${ className }`
 
         return (
-            <button className={ Aphrodite.css( Style.button, active && Style.button__active ) } { ...eventHandlers }>
+            <button className={ buttonClassName } style={ style } { ...this.otherProps( ) }>
                 { children }
             </button>
         )
