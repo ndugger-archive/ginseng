@@ -21,7 +21,6 @@ export default Aphrodite.StyleSheet.create( {
 	},
 
 	radioButton: {
-		cursor: 'pointer',
 		marginRight: 4,
 
 		':hover': {

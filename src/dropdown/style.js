@@ -6,7 +6,6 @@ export default Aphrodite.StyleSheet.create( {
 	dropDownOption: {
 		display: 'flex',
 		alignItems: 'center',
-		cursor: 'pointer',
 		padding: '3px 10px',
 
 		':hover': {
@@ -15,10 +14,26 @@ export default Aphrodite.StyleSheet.create( {
 		}
 	},
 
+	dropDownOption__selected: {
+		color: Palette.active
+	},
+
 	dropDownOptionCheckBox: {
-		fontSize: 18,
+		fontSize: '16px !important',
 		lineHeight: 0,
-		marginLeft: -4
+		marginLeft: -4,
+
+		':hover': {
+			color: 'inherit'
+		}
+	},
+
+	dropDownOptionCheckBox__checked: {
+		color: 'inherit !important',
+
+		':hover': {
+			color: 'inherit !important'
+		}
 	},
 
 	dropDownOptionContainer: {
@@ -33,10 +48,6 @@ export default Aphrodite.StyleSheet.create( {
         boxShadow: `inset 0 0 0 1px ${ Palette.border }`,
 	},
 
-	dropDownOption__checked: {
-
-	},
-
 	dropDown: {
 		position: 'relative',
 		background: Palette.input
@@ -44,5 +55,9 @@ export default Aphrodite.StyleSheet.create( {
 
 	dropDownInput: {
 		background: 'transparent !important'
+	},
+
+	dropDownButton: {
+		padding: '0 3px'
 	}
 } )

@@ -9,7 +9,6 @@ export default Aphrodite.StyleSheet.create( {
 	},
 
 	checkBox: {
-		cursor: 'pointer',
 		marginRight: 4,
 
 		':hover': {

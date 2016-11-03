@@ -6,8 +6,11 @@ export default Aphrodite.StyleSheet.create( {
 	app: {
 		cursor: 'default',
 		userSelect: 'none',
+		width: '100%',
+		height: '100%',
 		fontFamily: 'Cabin, sans-serif',
 		fontSize: 14,
-		color: Palette.text
+		color: Palette.text,
+		background: Palette.highlight
 	}
 } )

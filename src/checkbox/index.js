@@ -3,14 +3,26 @@ import * as Aphrodite from 'aphrodite/no-important'
 
 import BaseGinsengComponent from '../base'
 import Icon from '../icon'
+
+import CheckBoxSwitch from './switch'
 import Style from './style'
 
 export default class CheckBox extends BaseGinsengComponent {
+
+	static Switch = CheckBoxSwitch
 
 	state = { checked: false }
 
 	componentWillMount ( ) {
 		this.setState( { checked: Boolean( this.props.checked ) } )
+	}
+
+	componentWillReceiveProps ( nextProps ) {
+		const { checked } = nextProps
+
+		if ( checked !== this.state.checked ) {
+			this.setState( { checked } )
+		}
 	}
 
 	handleClick ( event ) {

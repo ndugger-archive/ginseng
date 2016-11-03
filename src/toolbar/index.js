@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import * as Aphrodite from 'aphrodite/no-important'
 
+import BaseGinsengComponent from '../base'
+
 import Style from './style'
 
-export default class Toolbar extends Component {
+export default class Toolbar extends BaseGinsengComponent {
 
     static Separator ( props ) {
         const { className = '', style = { } } = props
@@ -15,11 +17,11 @@ export default class Toolbar extends Component {
     }
 
     render ( ) {
-        const { children, className = '', eventHandlers = { }, style = { } } = this.props
+        const { children, className = '', style = { } } = this.props
         const toolbarClassName = `${ Aphrodite.css( Style.toolbar ) } ${ className }`
 
         return (
-            <nav className={ toolbarClassName } style={ style } { ...eventHandlers }>
+            <nav className={ toolbarClassName } style={ style } { ...this.otherProps( ) }>
                 { children }
             </nav>
         )

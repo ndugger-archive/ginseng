@@ -6,7 +6,6 @@ export default Aphrodite.StyleSheet.create( {
     button: {
         display: 'flex',
         alignItems: 'center',
-        cursor: 'pointer',
         height: 28,
         padding: '0 10px',
         fontSize: 'inherit',
@@ -30,7 +29,15 @@ export default Aphrodite.StyleSheet.create( {
 
     button__active: {
         background: Palette.lowlight,
-        boxShadow: 'none'
+        boxShadow: 'none',
+
+        ':hover': {
+            background: Palette.lowlight
+        }
+    },
+
+    buttonIcon: {
+        padding: '0 4px'
     },
 
     buttonGroup: {

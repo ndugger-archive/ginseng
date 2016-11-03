@@ -6,45 +6,54 @@ import Style from './style'
 
 export default class RadioButtonGroup extends BaseGinsengComponent {
 
-	radioButtons = [ ]
+	static defaultProps = {
+		className: '',
+		direction: 'row',
+		eventHandlers: { },
+		style: { }
+	}
+
+	static childContextTypes = {
+		checked: React.PropTypes.any,
+		direction: React.PropTypes.string,
+		handleRadioClick: React.PropTypes.func
+	}
+
 	state = { checked: null }
 
-	handleClick ( event ) {
-		const { onClick, $onChange } = this.props
-		const radioButtonContainer = Aphrodite.css( Style.radioButtonContainer )
-		const target = event.target.closest( `[class~=${ radioButtonContainer }]` )
-		const checked = [ ...event.currentTarget.children ].indexOf( target )
-
-		this.radioButtons.forEach( ( radioButton, i ) =>
-			radioButton.setState( { checked: i === checked } ) )
-
-		if ( onClick ) {
-			onClick( event )
+	getChildContext ( ) {
+		return {
+			checked: this.state.checked,
+			direction: this.props.direction,
+			handleRadioClick: value => this.handleOptionClick( value )
 		}
+	}
 
-		if ( $onChange ) {
-			const checkedRadioButton = this.radioButtons[ checked ]
-			const { label = null, value } = checkedRadioButton.props
+	componentWillMount ( ) {
+		const { children } = this.props
+		const checkedRadio = children.find( x => x.props.checked )
 
-			$onChange( value || label )
+		if ( checkedRadio ) {
+			this.setState( { checked: checkedRadio.props.value || checkedRadio.props.label } )
+		}
+	}
+
+	handleOptionClick ( value ) {
+		this.setState( { checked: value } )
+
+		if ( this.props.$onChange ) {
+			this.props.$onChange( value )
 		}
 	}
 
 	render ( ) {
-		const { children, className = '', direction = 'row', eventHandlers = { }, style = { } } = this.props
+		const { children, className, direction, style } = this.props
 		const radioButtonGroupClassName = `${ Aphrodite.css( Style.radioButtonGroup ) } ${ className }`
-		const radioButtonGroupStyle = { flexDirection: direction, alignItems: direction.match('column') ? 'inherit' : 'center' }
-		const more = { onClick: e => this.handleClick( e ) }
-
-		const clonedChildren = [ ]
-		const ref = radioButton => this.radioButtons.push( radioButton )
-
-		children.forEach( ( radioButton, key ) =>
-			clonedChildren.push( React.cloneElement( radioButton, { key, ref, direction } ) ) )
+		const radioButtonGroupStyle = { flexDirection: direction, alignItems: direction.match('column') ? 'inherit' : 'center', ...style }
 
 		return (
-			<div className={ radioButtonGroupClassName } style={ radioButtonGroupStyle } { ...this.otherProps( more ) }>
-				{ clonedChildren }
+			<div className={ radioButtonGroupClassName } style={ radioButtonGroupStyle } { ...this.otherProps( ) }>
+				{ children }
 			</div>
 		)
 	}

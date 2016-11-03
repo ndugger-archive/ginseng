@@ -10,22 +10,44 @@ export default class RadioButton extends BaseGinsengComponent {
 
 	static Group = RadioButtonGroup
 
-	state = { checked: false }
+	static defaultProps = {
+		className: '',
+		label: '',
+		style: { },
+	}
 
-	componentWillMount ( ) {
-		this.setState( { checked: Boolean( this.props.checked ) } )
+	static contextTypes = {
+		checked: React.PropTypes.any,
+		direction: React.PropTypes.string,
+		handleRadioClick: React.PropTypes.func
+	}
+
+	get checked ( ) {
+		return this.context.checked === this.value
+	}
+
+	get value ( ) {
+		return this.props.value || this.props.label
+	}
+
+	handleClick ( e ) {
+		this.context.handleRadioClick( this.value )
+
+		if ( this.props.onClick ) {
+			this.props.onClick( e )
+		}
 	}
 
 	render ( ) {
-		const { checked } = this.state
-		const { className = '', label = '', style = { }, direction = 'row' } = this.props
-		const isRow = direction === 'row'
+		const { className, label, style } = this.props
+		const isRow = this.context.direction === 'row'
 		const radioButtonContainerClassName = Aphrodite.css( Style.radioButtonContainer, isRow && Style.radioButtonContainer__row )
-		const radioButtonClassName = `${ Aphrodite.css( Style.radioButton, checked && Style.radioButton__checked ) } ${ className }`
-		const glyph = checked ? 'radio_button_checked' : 'radio_button_unchecked'
+		const radioButtonClassName = `${ Aphrodite.css( Style.radioButton, this.checked && Style.radioButton__checked ) } ${ className }`
+		const glyph = this.checked ? 'radio_button_checked' : 'radio_button_unchecked'
+		const more = { onClick: e => this.handleClick( e ) }
 
 		return (
-			<span className={ radioButtonContainerClassName } { ...this.otherProps( ) }>
+			<span className={ radioButtonContainerClassName } { ...this.otherProps( more ) }>
 				<Icon glyph={ glyph } className={ radioButtonClassName } />
 				{ label }
 			</span>
